@@ -24,14 +24,68 @@ class StoryTray extends StatelessWidget {
           ),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: provider.stories.length,
+            itemCount: provider.stories.length + 1,
             itemBuilder: (context, index) {
-              final story = provider.stories[index];
+              if (index == 0) {
+                return const YourStoryItem();
+              }
+              final story = provider.stories[index - 1];
               return StoryItem(story: story);
             },
           ),
         );
       },
+    );
+  }
+}
+
+class YourStoryItem extends StatelessWidget {
+  const YourStoryItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              const CircleAvatar(
+                radius: 32,
+                backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=sarthak'),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF0095F6),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Your story',
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -48,11 +102,13 @@ class StoryItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.all(2.5),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: story.isViewed
-                  ? const LinearGradient(colors: [Colors.grey, Colors.grey])
+                  ? LinearGradient(
+                      colors: [Colors.grey.withValues(alpha: 0.3), Colors.grey.withValues(alpha: 0.3)],
+                    )
                   : const LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
@@ -64,7 +120,7 @@ class StoryItem extends StatelessWidget {
                     ),
             ),
             child: Container(
-              padding: const EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2.5),
               decoration: const BoxDecoration(
                 color: Colors.black,
                 shape: BoxShape.circle,
@@ -75,12 +131,12 @@ class StoryItem extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           SizedBox(
             width: 70,
             child: Text(
               story.user.username,
-              style: const TextStyle(fontSize: 11, color: Colors.white),
+              style: const TextStyle(fontSize: 12, color: Colors.white),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
             ),

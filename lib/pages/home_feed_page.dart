@@ -30,8 +30,8 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
   }
 
   void _onScroll() {
-    // Trigger lazy loading when user is roughly 2 posts away from the bottom
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 1200) {
+    // Trigger lazy loading when user is roughly 2 posts away from the bottom (approx 1200-1400px)
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 1400) {
       context.read<FeedProvider>().fetchMorePosts();
     }
   }
@@ -56,11 +56,11 @@ class _HomeFeedPageState extends State<HomeFeedPage> {
         centerTitle: false,
         actions: [
           IconButton(
-            icon: const Icon(FontAwesomeIcons.heart, size: 22),
+            icon: const FaIcon(FontAwesomeIcons.heart, size: 24),
             onPressed: () => _showUnimplementedSnackbar(context),
           ),
           IconButton(
-            icon: const Icon(FontAwesomeIcons.facebookMessenger, size: 22),
+            icon: const FaIcon(FontAwesomeIcons.facebookMessenger, size: 24),
             onPressed: () => _showUnimplementedSnackbar(context),
           ),
           const SizedBox(width: 8),
